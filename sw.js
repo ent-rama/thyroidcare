@@ -1,6 +1,6 @@
 // Thyroid Care — offline cache. Bump VERSION every time index.html changes.
-const VERSION = 'thyroid-care-v5';
-const CORE = ['./', './index.html', './manifest.json', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
+const VERSION = 'thyroid-care-v6';
+const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));

@@ -4,7 +4,7 @@
 ติดตั้งลงหน้าจอโฮมได้ และเปิดดูได้โดยไม่ใช้อินเทอร์เน็ต หลังจากเปิดครั้งแรกตอนมีเน็ต
 
 ## วิธีขึ้น GitHub Pages
-1. สร้าง repository ใหม่ (Public) แล้วอัปโหลดไฟล์ทั้งหมดในโฟลเดอร์นี้ (index.html, manifest.json, sw.js, โฟลเดอร์ icons)
+1. สร้าง repository ใหม่ (Public) แล้วอัปโหลดไฟล์ทั้งหมดในโฟลเดอร์นี้ (index.html, manifest.json, sw.js, icon-192.png, icon-512.png, apple-touch-icon.png)
 2. Settings → Pages → Branch: main / (root) → Save
 3. รอ 1–2 นาที จะได้ลิงก์ https://<ชื่อบัญชี>.github.io/<ชื่อ repo>/
 

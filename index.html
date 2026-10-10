@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Thyroid Care">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Thyroid Care</title>
 <meta name="description" content="แอปคำแนะนำการปฏิบัติตัวผู้ป่วยผ่าตัดต่อมไทรอยด์ รพ.รามาธิบดี">
@@ -249,6 +249,30 @@ main{display:flex;flex-direction:column;gap:14px;padding:6px 16px 20px}
 .sosbig .tel,.res .tel,.dialog .tel{background:var(--sos);color:#fff}
 .dialog .tel{justify-content:center}
 .hint{margin:0 4px;font-size:14px;color:var(--muted)}
+
+/* ---------- install guide ---------- */
+.inst{position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:25;max-width:456px;margin:0 auto;display:flex;align-items:center;gap:12px;background:var(--surface);border-radius:18px;box-shadow:0 8px 28px rgba(10,40,70,.22);padding:12px 8px 12px 12px}
+.inst img{width:52px;height:52px;border-radius:12px;flex-shrink:0;object-fit:cover;object-position:50% 20%}
+.inst .it{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.4}
+.inst .it b{font-family:var(--f-display);font-weight:700;font-size:17px;color:var(--ink)}
+.inst .it small{font-size:14.5px;color:var(--muted);line-height:1.45}
+.inst .go{border:0;border-radius:12px;background:#0A3558;color:#fff;font-weight:700;font-size:16px;padding:10px 16px;cursor:pointer;white-space:nowrap}
+.inst .x{border:0;background:none;color:var(--muted);font-size:24px;line-height:1;padding:2px 6px;cursor:pointer;align-self:flex-start}
+.inst .it small{display:block}
+.guide{background:var(--surface);color:var(--text);border-radius:22px;max-width:420px;width:100%;max-height:86vh;overflow:auto;padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.guide h3{margin:0;font-size:20px;color:var(--ink);text-align:center}
+.guide .sub2{margin:-6px 0 0;text-align:center;color:var(--muted);font-size:15px}
+.gtabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--bg);padding:4px;border-radius:999px}
+.gtabs button{border:0;border-radius:999px;background:none;padding:8px;font-weight:700;font-size:15px;color:var(--muted);cursor:pointer}
+.gtabs button[aria-pressed="true"]{background:var(--surface);color:var(--brand);box-shadow:var(--shadow)}
+.gsteps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:g}
+.gsteps li{display:flex;gap:12px;align-items:flex-start;font-size:17px;line-height:1.55;counter-increment:g}
+.gsteps li::before{content:counter(g);flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.gsteps .k{display:inline-flex;align-items:center;gap:4px;background:var(--brand-soft);color:var(--brand);font-weight:700;border-radius:8px;padding:0 8px;white-space:nowrap}
+.gsteps .k svg{width:16px;height:16px}
+.gwarn{background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);border-radius:14px;padding:10px 12px;font-size:15.5px;line-height:1.55}
+.gok{background:var(--ok-bg);border:1px solid var(--ok-line);border-radius:14px;padding:10px 12px;font-size:15.5px;line-height:1.55}
+.guide .btn-block{height:50px;font-size:17px}
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:8px 16px;border-radius:999px;font-size:15px;z-index:70}
 .toast[hidden]{display:none}
 </style>
@@ -280,6 +304,27 @@ main{display:flex;flex-direction:column;gap:14px;padding:6px 16px 20px}
 
 <div class="overlay" id="zoom" hidden><img id="zoomImg" alt=""><p id="zoomCap"></p><button type="button" class="close" id="zoomClose">ปิด</button></div>
 <div class="overlay" id="scWarn" hidden><div class="dialog" role="alertdialog" aria-labelledby="scWarnT"><h3 id="scWarnT">⚠️ สังเกตอาการเพิ่มเติม</h3><p id="scWarnBody"></p><a class="tel" href="tel:1669">📞 โทร 1669</a><button type="button" class="close" id="scWarnClose">รับทราบ</button></div></div>
+<div class="overlay" id="guide" hidden><div class="guide" role="dialog" aria-labelledby="guideT">
+  <h3 id="guideT">ติดตั้ง Thyroid Care ไว้ในมือถือ</h3>
+  <p class="sub2">ติดตั้งครั้งเดียว เปิดดูได้แม้ไม่มีอินเทอร์เน็ต</p>
+  <div class="gtabs"><button type="button" data-os="ios">iPhone / iPad</button><button type="button" data-os="android">Android</button></div>
+  <div id="gLine" class="gwarn" hidden>ตอนนี้เปิดอยู่ในแอป LINE ซึ่งติดตั้งไม่ได้<br>กด <b>⋯</b> มุมขวาบน แล้วเลือก <b>เปิดในเบราว์เซอร์</b> (Safari หรือ Chrome) ก่อนนะคะ</div>
+  <ol class="gsteps" id="gIos">
+    <li><span>เปิดลิงก์นี้ด้วย <b>Safari</b></span></li>
+    <li><span>กดปุ่ม <span class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/></svg>แชร์</span> ด้านล่างหรือด้านบนของจอ</span></li>
+    <li><span>เลื่อนลง แล้วเลือก <span class="k">เพิ่มไปยังหน้าจอโฮม</span></span></li>
+    <li><span>กด <span class="k">เพิ่ม</span> มุมขวาบน</span></li>
+  </ol>
+  <ol class="gsteps" id="gAnd" hidden>
+    <li><span>เปิดลิงก์นี้ด้วย <b>Chrome</b></span></li>
+    <li><span>กดเมนู <span class="k">⋮</span> มุมขวาบน</span></li>
+    <li><span>เลือก <span class="k">ติดตั้งแอป</span> หรือ <span class="k">เพิ่มลงในหน้าจอหลัก</span></span></li>
+    <li><span>กด <span class="k">ติดตั้ง</span></span></li>
+  </ol>
+  <button type="button" class="btn-block" id="gInstall" hidden>ติดตั้งเลย</button>
+  <div class="gok">เมื่อติดตั้งแล้ว จะมีไอคอน Thyroid Care บนหน้าจอ<br>กดเปิดได้เหมือนแอปทั่วไป</div>
+  <button type="button" class="btn-block ghost" id="gClose">ปิด</button>
+</div></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -569,6 +614,43 @@ function tidyNode(root){
 }
 function tidy(scope){ scope.querySelectorAll(TIDY_SEL).forEach(tidyNode); }
 
+
+/* ---------- install guide (GitHub version) ---------- */
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const UA = navigator.userAgent || '';
+const isIOS = /iPhone|iPad|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const inLine = /\bLine\//i.test(UA);
+let deferredPrompt = null;
+let instHidden = false; try { instHidden = localStorage.getItem('tc-inst-hide') === '1'; } catch(e){}
+const SHARE_IC = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;color:var(--brand)"><path d="M12 3v12M8 7l4-4 4 4M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/></svg>';
+function installCard(){
+  if (isStandalone() || instHidden) return '';
+  let msg, btn = '';
+  if (inLine) msg = 'กด ⋯ มุมขวาบน แล้วเลือก<br>"เปิดในเบราว์เซอร์" ก่อนติดตั้ง';
+  else if (isIOS) msg = `แตะปุ่มแชร์ ${SHARE_IC} แล้วเลือก<br>"เพิ่มไปยังหน้าจอโฮม"`;
+  else if (deferredPrompt) { msg = 'เปิดใช้ได้เหมือนแอป แม้ไม่มีอินเทอร์เน็ต'; btn = '<button type="button" class="go" id="instGo">ติดตั้ง</button>'; }
+  else msg = 'กดเมนู ⋮ แล้วเลือก<br>"ติดตั้งแอป"';
+  return `<div class="inst" id="instCard"><img src="${HERO_IMG}" alt=""><div class="it"><b>ติดตั้ง Thyroid Care</b><small>${msg}</small></div>${btn}<button type="button" class="x" id="instX" aria-label="ปิด">×</button></div>`;
+}
+function refreshInstallBar(){ const c = document.getElementById('instCard'); if (c) { c.remove(); showInstallBar(); } }
+function showInstallBar(){ if (document.getElementById('instCard')) return; const h = installCard(); if (h) document.body.insertAdjacentHTML('beforeend', h); }
+const guide = document.getElementById('guide');
+function setOS(os){
+  document.querySelectorAll('.gtabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.os === os));
+  document.getElementById('gIos').hidden = os !== 'ios';
+  document.getElementById('gAnd').hidden = os !== 'android';
+  document.getElementById('gInstall').hidden = !(os === 'android' && deferredPrompt);
+}
+function openGuide(){ document.getElementById('gLine').hidden = !inLine; setOS(isIOS ? 'ios' : 'android'); guide.hidden = false; }
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; if (!guide.hidden) setOS('android'); refreshInstallBar(); });
+window.addEventListener('appinstalled', () => { deferredPrompt = null; guide.hidden = true; const c = document.getElementById('instCard'); if (c) c.remove(); });
+document.addEventListener('click', e => {
+  if (e.target.closest('#instGo')) { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(r => { deferredPrompt = null; if (r.outcome === 'accepted') { const c = document.getElementById('instCard'); if (c) c.remove(); } else refreshInstallBar(); }); } else openGuide(); return; }
+  if (e.target.closest('#instX')) { instHidden = true; try { localStorage.setItem('tc-inst-hide','1'); } catch(err){} const c = document.getElementById('instCard'); if (c) c.remove(); return; }
+  const t = e.target.closest('.gtabs button'); if (t) { setOS(t.dataset.os); return; }
+  if (e.target.id === 'gClose' || e.target === guide) { guide.hidden = true; return; }
+  if (e.target.id === 'gInstall' && deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.finally(() => { deferredPrompt = null; setOS('android'); }); }
+});
 /* ---------- render ---------- */
 let cur = 'home';
 const topEl = document.getElementById('top'), view = document.getElementById('view'), tabs = document.getElementById('tabs');
@@ -597,6 +679,7 @@ document.getElementById('startBtn').addEventListener('click', () => {
   splash.classList.add('leaving');
   setTimeout(() => { splash.hidden = true; }, 260);
   try { sessionStorage.setItem('tc-started','1'); } catch(e){}
+  setTimeout(showInstallBar, 400);
 });
 let started = false; try { started = sessionStorage.getItem('tc-started') === '1'; } catch(e){}
 if (started || location.hash.length > 1) splash.hidden = true;
@@ -605,7 +688,7 @@ const zoom = document.getElementById('zoom'), scWarn = document.getElementById('
 document.getElementById('zoomClose').addEventListener('click', () => zoom.hidden = true);
 zoom.addEventListener('click', e => { if (e.target === zoom) zoom.hidden = true; });
 document.getElementById('scWarnClose').addEventListener('click', () => scWarn.hidden = true);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { zoom.hidden = true; scWarn.hidden = true; } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { zoom.hidden = true; scWarn.hidden = true; guide.hidden = true; } });
 function showToast(t){ toast.textContent = t; toast.hidden = false; clearTimeout(showToast.t); showToast.t = setTimeout(() => toast.hidden = true, 1800); }
 
 document.addEventListener('click', e => {
@@ -637,6 +720,7 @@ document.addEventListener('submit', e => {
 });
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (h && h !== cur) render(h); });
 render(location.hash.slice(1) || 'home');
+if (splash.hidden) showInstallBar();
 </script>
 
 <script>
