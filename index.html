@@ -259,6 +259,7 @@ main{display:flex;flex-direction:column;gap:14px;padding:6px 16px 20px}
 .inst .go{border:0;border-radius:12px;background:#0A3558;color:#fff;font-weight:700;font-size:16px;padding:10px 16px;cursor:pointer;white-space:nowrap}
 .inst .x{border:0;background:none;color:var(--muted);font-size:24px;line-height:1;padding:2px 6px;cursor:pointer;align-self:flex-start}
 .inst .it small{display:block}
+.inst.onsplash{z-index:45;bottom:calc(112px + env(safe-area-inset-bottom,0px))}
 .guide{background:var(--surface);color:var(--text);border-radius:22px;max-width:420px;width:100%;max-height:86vh;overflow:auto;padding:20px 18px;display:flex;flex-direction:column;gap:14px}
 .guide h3{margin:0;font-size:20px;color:var(--ink);text-align:center}
 .guide .sub2{margin:-6px 0 0;text-align:center;color:var(--muted);font-size:15px}
@@ -626,14 +627,14 @@ const SHARE_IC = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" st
 function installCard(){
   if (isStandalone() || instHidden) return '';
   let msg, btn = '';
-  if (inLine) msg = 'กด ⋯ มุมขวาบน แล้วเลือก<br>"เปิดในเบราว์เซอร์" ก่อนติดตั้ง';
-  else if (isIOS) msg = `แตะปุ่มแชร์ ${SHARE_IC} แล้วเลือก<br>"เพิ่มไปยังหน้าจอโฮม"`;
+  if (isIOS) msg = `แตะปุ่มแชร์ ${SHARE_IC} แล้วเลือก<br>"เพิ่มไปยังหน้าจอโฮม"`;
   else if (deferredPrompt) { msg = 'เปิดใช้ได้เหมือนแอป แม้ไม่มีอินเทอร์เน็ต'; btn = '<button type="button" class="go" id="instGo">ติดตั้ง</button>'; }
+  else if (inLine) msg = 'กด ⋮ มุมขวาบน แล้วเลือก<br>"เปิดในเบราว์เซอร์" ก่อนติดตั้ง';
   else msg = 'กดเมนู ⋮ แล้วเลือก<br>"ติดตั้งแอป"';
   return `<div class="inst" id="instCard"><img src="${HERO_IMG}" alt=""><div class="it"><b>ติดตั้ง Thyroid Care</b><small>${msg}</small></div>${btn}<button type="button" class="x" id="instX" aria-label="ปิด">×</button></div>`;
 }
 function refreshInstallBar(){ const c = document.getElementById('instCard'); if (c) { c.remove(); showInstallBar(); } }
-function showInstallBar(){ if (document.getElementById('instCard')) return; const h = installCard(); if (h) document.body.insertAdjacentHTML('beforeend', h); }
+function showInstallBar(){ if (!document.getElementById('instCard')) { const h = installCard(); if (h) document.body.insertAdjacentHTML('beforeend', h); } const c = document.getElementById('instCard'); if (c) c.classList.toggle('onsplash', !splash.hidden); }
 const guide = document.getElementById('guide');
 function setOS(os){
   document.querySelectorAll('.gtabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.os === os));
@@ -679,7 +680,7 @@ document.getElementById('startBtn').addEventListener('click', () => {
   splash.classList.add('leaving');
   setTimeout(() => { splash.hidden = true; }, 260);
   try { sessionStorage.setItem('tc-started','1'); } catch(e){}
-  setTimeout(showInstallBar, 400);
+  setTimeout(showInstallBar, 300);
 });
 let started = false; try { started = sessionStorage.getItem('tc-started') === '1'; } catch(e){}
 if (started || location.hash.length > 1) splash.hidden = true;
@@ -720,7 +721,7 @@ document.addEventListener('submit', e => {
 });
 window.addEventListener('hashchange', () => { const h = location.hash.slice(1); if (h && h !== cur) render(h); });
 render(location.hash.slice(1) || 'home');
-if (splash.hidden) showInstallBar();
+showInstallBar();
 </script>
 
 <script>
