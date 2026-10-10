@@ -1,5 +1,5 @@
 // Thyroid Care — offline cache. Bump VERSION every time index.html changes.
-const VERSION = 'thyroid-care-v8';
+const VERSION = 'thyroid-care-v9';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
