@@ -172,14 +172,15 @@ main{display:flex;flex-direction:column;gap:14px;padding:6px 16px 20px}
 .signs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sign{background:var(--surface);border:0;border-radius:18px;box-shadow:var(--shadow);padding:0 0 12px;overflow:hidden;display:flex;flex-direction:column;gap:8px;cursor:zoom-in;text-align:left}
 .sign img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
-.sign span{display:flex;gap:8px;align-items:flex-start;padding:0 12px;font-size:16px;line-height:1.45;font-weight:600;color:var(--ink)}
+.sign>span{display:flex;gap:8px;align-items:flex-start;padding:0 12px;font-size:16px;line-height:1.45;font-weight:600;color:var(--ink)}
+.sign b{font-weight:inherit;min-width:0}
 .sign i{width:9px;height:9px;border-radius:50%;background:var(--sos);flex-shrink:0;margin-top:7px}
 .signs.three{grid-template-columns:repeat(3,1fr);gap:8px}
 .signs.one{grid-template-columns:1fr}
 .signs.one .sign{align-items:stretch;padding:12px}
 .signs.one .sign img{width:min(100%,240px);margin:0 auto;border-radius:12px;border:1px solid var(--line)}
-.signs.one .sign span{font-size:18px;padding:0 4px}
-.signs.three .sign span{font-size:13px;padding:0 6px;justify-content:center;text-align:center}.signs.three .sign i{display:none}
+.signs.one .sign>span{font-size:18px;padding:0 4px}
+.signs.three .sign>span{font-size:13px;padding:0 6px;justify-content:center;text-align:center}.signs.three .sign i{display:none}
 
 /* ---------- contact ---------- */
 .ccard{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
@@ -384,7 +385,7 @@ const note = (kind, html) => `<div class="note ${kind}"><span class="ni">${kind=
 const hero = (k, v='') => `<button class="hero ${v}" type="button" data-zoom="${k}" aria-label="ดูภาพขนาดใหญ่"><img src="${img(k)}" alt="${PAGES[cur]?.h||''}"></button>`;
 const intro = p => `<div class="intro"><h2>${p.h}</h2>${p.lead ? `<p>${p.lead}</p>` : ''}</div>`;
 const sec = t => `<div class="sec">${t}</div>`;
-const sign = (k, t, alt) => `<button class="sign" type="button" data-zoom="${k}" aria-label="ดูภาพ${alt}"><img src="${img(k)}" alt="${alt}"><span><i></i>${t}</span></button>`;
+const sign = (k, t, alt) => `<button class="sign" type="button" data-zoom="${k}" aria-label="ดูภาพ${alt}"><img src="${img(k)}" alt="${alt}"><span><i></i><b>${t}</b></span></button>`;
 const telBlock = (num, text) => `<a class="tel" href="tel:${num.replace(/-/g,'')}">📞 ${text || 'โทร ' + num}</a>`;
 const NUC = note('warn','สอบถามเพิ่มเติม: สาขาเวชศาสตร์นิวเคลียร์ รพ.รามาธิบดี<br>โทร. 02-201-1192');
 const ramaNote = `<span class="app-note"><img src="${ICONS.rama}" alt="RAMA APP"><span>เลื่อนนัดได้ทาง RAMA APP / โทรศัพท์<br>ก่อนตรวจอย่างน้อย 7 วัน</span></span>`;
