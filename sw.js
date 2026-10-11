@@ -1,5 +1,5 @@
 // Thyroid Care — offline cache. Bump VERSION every time index.html changes.
-const VERSION = 'thyroid-care-v12';
+const VERSION = 'thyroid-care-v13';
 const CORE = ['./', './index.html', './manifest.json', './thyroid-icon-192.png', './thyroid-icon-512.png', './thyroid-icon-180.png'];
 
 self.addEventListener('install', e => {
