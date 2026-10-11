@@ -216,6 +216,9 @@ main{display:flex;flex-direction:column;gap:14px;padding:6px 16px 20px}
 .sosbig b{color:var(--sos);font-family:var(--f-display);font-weight:600;font-size:17px}
 .sosbig .telno{color:var(--sos);font-size:30px}
 .sosbig .tbtn.call{background:var(--sos)}
+.ramainfo{text-decoration:none;color:inherit;cursor:pointer}
+.ramainfo>svg{width:20px;height:20px;flex:none;color:var(--brand)}
+a.app-note{color:inherit;text-decoration:none;cursor:pointer}
 .ramainfo{display:flex;gap:14px;align-items:center;background:var(--brand-soft);border-radius:18px;padding:14px 16px}
 .ramainfo img{width:52px;height:52px;border-radius:12px;flex-shrink:0}
 .ramainfo b{display:block;font-family:var(--f-display);font-weight:600;color:var(--brand)}
@@ -413,7 +416,8 @@ const sec = t => `<div class="sec">${t}</div>`;
 const sign = (k, t, alt) => `<button class="sign" type="button" data-zoom="${k}" aria-label="ดูภาพ${alt}"><img src="${img(k)}" alt="${alt}"><span><i></i><b>${t}</b></span></button>`;
 const telBlock = (num, text) => `<a class="tel" href="tel:${num.replace(/-/g,'')}">📞 ${text || 'โทร ' + num}</a>`;
 const NUC = note('warn','สอบถามเพิ่มเติม :<br>สาขาเวชศาสตร์นิวเคลียร์<br>โรงพยาบาลรามาธิบดี<br>โทร. 02-201-1192');
-const ramaNote = `<span class="app-note"><img src="${ICONS.rama}" alt="RAMA APP"><span>เลื่อนนัดได้ทาง RAMA APP / โทรศัพท์<br>ก่อนตรวจอย่างน้อย 7 วัน</span></span>`;
+const RAMA_IOS = "https://apps.apple.com/th/app/id1486537464", RAMA_AND = "https://play.google.com/store/apps/details?id=org.ramathibodi.ramaapp";
+const ramaNote = `<a class="app-note" data-rama href="${RAMA_AND}" target="_blank" rel="noopener" aria-label="เปิด RAMA App"><img src="${ICONS.rama}" alt="RAMA APP"><span>เลื่อนนัดได้ทาง RAMA APP / โทรศัพท์<br>ก่อนตรวจอย่างน้อย 7 วัน</span></a>`;
 
 /* ---------- views ---------- */
 const VIEWS = {
@@ -643,7 +647,7 @@ const VIEWS = {
     <div id="scResult" style="display:flex;flex-direction:column;gap:12px;scroll-margin-top:80px"></div>`,
 
   contact: () => `
-    <div class="ramainfo"><img src="${ICONS.rama}" alt="RAMA APP"><div><b>ติดต่อเลื่อนนัดได้</b>ทาง RAMA APP / เบอร์โทรศัพท์<br>ก่อนตรวจอย่างน้อย 7 วัน</div></div>
+    <a class="ramainfo" data-rama href="${RAMA_AND}" target="_blank" rel="noopener" aria-label="เปิด RAMA App"><img src="${ICONS.rama}" alt="RAMA APP"><div><b>ติดต่อเลื่อนนัดได้</b>ทาง RAMA APP / เบอร์โทรศัพท์<br>ก่อนตรวจอย่างน้อย 7 วัน</div>${SV.ext}</a>
     <div class="sosbig"><b>🚨 กรณีเจ็บป่วยฉุกเฉินหรือวิกฤต</b><div>${telBlock('1669','โทร 1669')}</div></div>
     ${sec('แผนกตรวจผู้ป่วยนอก')}
     <div class="clist">
@@ -656,8 +660,7 @@ const VIEWS = {
       <div class="ccard"><b>หอผู้ป่วยจักษุโสตศอนาสิก ชาย</b><div>${telBlock('02-201-1613')}</div></div>
       <div class="ccard"><b>หอผู้ป่วยจักษุโสตศอนาสิก หญิง</b><div>${telBlock('02-201-1313')}</div></div>
       <div class="ccard"><b>หอผู้ป่วยจักษุโสตพิเศษ</b><div>${telBlock('02-201-1614')}</div></div>
-    </div>
-    <p class="hint">หากกดโทรไม่ได้ ให้กดค้างที่เบอร์เพื่อคัดลอก</p>`
+    </div>`
 };
 
 /* ---------- self check logic (เดิม) ---------- */
@@ -760,6 +763,7 @@ function render(id){
     topEl.innerHTML = `<div class="topbar" style="padding-left:20px"><h1>${p.title}</h1></div>`;
   }
   view.innerHTML = VIEWS[id](p) + (id === 'home' ? '' : `<div class="orgcard"><img src="${UNI_LOGO}" alt="มหาวิทยาลัยมหิดล คณะแพทยศาสตร์โรงพยาบาลรามาธิบดี"></div>`);
+  { const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); view.querySelectorAll('a[data-rama]').forEach(a => { a.href = ios ? RAMA_IOS : RAMA_AND; }); }
   tidy(view); tidy(topEl);
   view.style.animation = 'none'; void view.offsetWidth; view.style.animation = '';
   tabs.innerHTML = TABS.map(([to,ic,label]) => `<button class="tab" type="button" data-go="${to}" ${TABKEY[to]===p.tab?'aria-current="page"':''}>${SV[ic]}<span>${label}</span></button>`).join('');
