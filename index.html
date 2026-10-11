@@ -129,6 +129,7 @@ main{display:flex;flex-direction:column;gap:14px;padding:6px 16px 20px}
 .row .rt small{font-size:14px;color:var(--muted);line-height:1.45}
 .row .chev{width:20px;height:20px;color:var(--chev);flex-shrink:0}
 .row.doc .rt b{color:var(--brand)}
+.row.docp .rt b{font-size:17px}
 .row.rowb{flex-direction:column;align-items:stretch;gap:12px}
 .rbpic{display:block;width:min(100%,140px);margin:0 auto;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
 .rbpic img{display:block;width:100%;height:auto}
@@ -360,8 +361,8 @@ const PAGES = {
   calcium:{tab:'home', parent:'postop', title:'แคลเซียมในเลือดต่ำ', h:'สังเกตภาวะแคลเซียมในเลือดต่ำ', lead:'กรณีผ่าตัดไทรอยด์ทั้งสองข้าง ให้สังเกตอาการต่อไปนี้'},
   iodine:{tab:'home', parent:'postop', title:'งดอาหารไอโอดีน', h:'งดอาหารไอโอดีน', lead:'สำหรับผู้ที่ผ่าตัดไทรอยด์ออกทั้งหมด และต้องกลืนแร่หลังผ่าตัด', hero:'noiodine'},
   rai:{tab:'home', parent:'home', title:'กลืนแร่', h:'การกลืนแร่ไอโอดีนรังสี', lead:'การเตรียมตัวและข้อปฏิบัติ เพื่อให้การรักษาได้ผลดี และปลอดภัยต่อคนรอบข้าง', hero:'raiswallow'},
-  raibefore:{tab:'home', parent:'rai', title:'ก่อนกลืนแร่ (ไม่นอน รพ.)', h:'การเตรียมตัวก่อนกลืนแร่ ชนิดไม่ต้องนอนโรงพยาบาล', lead:'เริ่มเตรียมตัวล่วงหน้าหลายสัปดาห์ตามคำแนะนำของแพทย์'},
-  raibeforein:{tab:'home', parent:'rai', title:'ก่อนกลืนแร่ (นอน รพ.)', h:'การเตรียมตัวนอนโรงพยาบาลเพื่อกลืนแร่ไอโอดีนรังสี', lead:'สำหรับผู้ป่วยมะเร็งไทรอยด์ที่ต้องนอนโรงพยาบาล เพื่อรับการรักษาด้วยไอโอดีนรังสี (I-131)'},
+  raibefore:{tab:'home', parent:'rai', title:'ก่อนกลืนแร่ (ไม่นอน รพ.)', h:'การเตรียมตัวก่อนกลืนแร่ ชนิดไม่ต้องนอนโรงพยาบาล', lead:'เริ่มเตรียมตัวล่วงหน้าหลายสัปดาห์<br>ตามคำแนะนำของแพทย์'},
+  raibeforein:{tab:'home', parent:'rai', title:'ก่อนกลืนแร่ (นอน รพ.)', h:'การเตรียมตัวนอนโรงพยาบาลเพื่อกลืนแร่ไอโอดีนรังสี', lead:'สำหรับผู้ป่วยมะเร็งไทรอยด์ที่ต้องนอนโรงพยาบาล<br>เพื่อรับการรักษาด้วยไอโอดีนรังสี (I-131)'},
   raiafter30:{tab:'home', parent:'rai', title:'หลังกลืนแร่ 30 mCi', h:'การปฏิบัติตัวหลังกลืนแร่ 30 มิลลิคูรี', lead:'ความแรงรังสี 1110 เมกะเบ็กเคอเรล (30 มิลลิคูรี) ลดปริมาณรังสีในร่างกาย และป้องกันคนรอบข้าง', hero:'raiafterbanner'},
   raiafter100:{tab:'home', parent:'rai', title:'หลังกลืนแร่ 100 mCi', h:'การปฏิบัติตัวหลังกลืนแร่ 100 มิลลิคูรี', lead:'ความแรงรังสี 3700 เมกะเบ็กเคอเรล (100 มิลลิคูรี) ลดปริมาณรังสีในร่างกาย และป้องกันคนรอบข้าง', hero:'raiafterbanner'},
   raiafter150:{tab:'home', parent:'rai', title:'หลังกลืนแร่ 150 mCi', h:'การปฏิบัติตัวหลังกลืนแร่ 150 มิลลิคูรี', lead:'ความแรงรังสี 5550 เมกะเบ็กเคอเรล (150 มิลลิคูรี) ลดปริมาณรังสีในร่างกาย และป้องกันคนรอบข้าง', hero:'raiafterbanner'},
@@ -385,7 +386,7 @@ function card(k, title, body, alt){
                  : `<span class="nobox">${n || '•'}</span>`;
   return `<div class="card${k?' stack':''}">${lead}<div class="ct"><b>${t}</b>${body ? `<span>${body}</span>` : ''}</div></div>`;
 }
-const docPdf = (href, t) => `<a class="row doc" href="${href}" target="_blank" rel="noopener">${`<span class="ci">${SV.book}</span>`}<span class="rt"><b>${t}</b><small>เปิดเอกสาร (PDF)</small></span>${SV.ext}</a>`;
+const docPdf = (href, t) => `<a class="row doc docp" href="${href}" target="_blank" rel="noopener">${`<span class="ci">${SV.book}</span>`}<span class="rt"><b>${t}</b><small>เปิดเอกสาร (PDF)</small></span>${SV.ext}</a>`;
 const note = (kind, html) => `<div class="note ${kind}"><span class="ni">${kind==='warn'||kind==='sos'?'!':'i'}</span><div>${html}</div></div>`;
 const hero = (k, v='') => `<button class="hero ${v}" type="button" data-zoom="${k}" aria-label="ดูภาพขนาดใหญ่"><img src="${img(k)}" alt="${PAGES[cur]?.h||''}"></button>`;
 const intro = p => `<div class="intro"><h2>${p.h}</h2>${p.lead ? `<p>${p.lead}</p>` : ''}</div>`;
@@ -526,7 +527,7 @@ const VIEWS = {
     </div>${NUC}`,
 
   raibeforein: p => `${intro(p)}
-    <div class="rows">${docPdf('docs/before-inpatient.pdf','เอกสารการเตรียมตัวนอนโรงพยาบาล\u200bเพื่อกลืนแร่ไอโอดีนรังสี')}</div>
+    <div class="rows">${docPdf('docs/before-inpatient.pdf','เอกสาร\u200bการเตรียมตัว\u200bนอนโรงพยาบาล\u200bเพื่อกลืนแร่\u200bไอโอดีนรังสี')}</div>
     <div class="rows">
       ${card('stopthy','1. งดฮอร์โมนไทรอยด์','4-6 สัปดาห์')}
       ${card('noiodine','2. งดอาหารและยาที่มีไอโอดีนสูง','2 สัปดาห์')}
